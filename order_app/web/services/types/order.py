@@ -1,5 +1,6 @@
 from datetime import date
-from typing import TypedDict, Literal, Tuple, List, Union
+from typing import Callable, TypedDict, Literal, Tuple, List, Union
+from kivy.network.urlrequest import UrlRequest
 
 
 class OrderPayload(TypedDict):
@@ -25,15 +26,32 @@ class OrderResponseError(TypedDict):
     detail: List[OrderError]
 
 
-class CreateOrderResponse(TypedDict):
+class BaseResponse(TypedDict):
     status_code: int
     message: str
     success: bool
+
+
+class CreateOrderResponse(BaseResponse):
     data: Union[Order, OrderResponseError]
 
 
-class GetOrdersResponse(TypedDict):
-    status_code: int
-    message: str
-    success: bool
+class GetOrdersResponse(BaseResponse):
     data: Union[List[Order], OrderResponseError]
+
+
+class FormatGetOrdersResponse:
+    def on_success(
+        on_success: Callable[[GetOrdersResponse], None]
+    ) -> GetOrdersResponse:
+        def success(request: UrlRequest, response_body: List[Order]):
+            response: GetOrdersResponse = {
+                "status_code": request.resp_status,
+                "message": "Pedido listados com sucesso!",
+                "success": True,
+                "data": response_body,
+            }
+
+            on_success(response)
+
+        return success

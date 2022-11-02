@@ -28,10 +28,15 @@
                 line_color: 0, 0, 0, 0
                 width: 240
                 md_bg_color: app.theme_cls.primary_color
-                text_color: '#ffffff'
-                icon_color: '#ffffff'
+                text_color: "#ffffff"
+                icon_color: "#ffffff"
                 opposite_colors: True
                 on_press: root.on_press_add_new_order(*args)
+        MDSpinner:
+            id: spinner
+            size_hint: None, None
+            size: 46, 46
+            pos_hint: {"center_x": .5, "center_y": .5}
         RecycleView:
             id: recycle_view
             key_size: "height"

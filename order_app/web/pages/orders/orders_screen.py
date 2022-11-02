@@ -8,7 +8,7 @@ from kivymd.uix.screen import Screen
 
 from order_app.web.utils.decorators.debounce import debounce
 from order_app.web.services.order_service import OrderService
-from order_app.web.services.types.order import Order
+from order_app.web.services.types.order import Order, GetOrdersResponse
 
 column_header = [
     ["Produto", dp(128)],
@@ -25,13 +25,20 @@ class OrdersScreen(Screen):
         self.data_table = None
 
     def on_pre_enter(self, *args):
-        response = OrderService.get_orders()
-        if response.get("success"):
-            data: List[Order] = response.get("data")
+        if self.ids.get("spinner") is not None:
+            self.ids.spinner.active = True
+
+        def on_success(response: GetOrdersResponse):
+            data = response.get("data")
             self.row_data = list(map(self.format_data, data))
 
             if self.data_table is not None:
                 self.data_table.row_data = self.row_data
+
+            if self.ids.get("spinner") is not None:
+                self.ids.spinner.active = False
+
+        OrderService.get_orders(on_success=on_success)
 
     def format_data(self, item: Order):
         return [
