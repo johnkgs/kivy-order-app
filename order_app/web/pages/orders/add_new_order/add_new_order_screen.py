@@ -1,5 +1,4 @@
 from datetime import date
-from typing import List, Union
 
 from kivymd.app import MDApp
 from kivymd.uix.button import MDRaisedButton
@@ -7,7 +6,6 @@ from kivymd.uix.screen import Screen
 from kivymd.uix.snackbar import Snackbar
 from kivymd.uix.textfield import MDTextField
 from kivymd.uix.toolbar import MDTopAppBar
-from kivymd.uix.gridlayout import MDGridLayout
 
 
 class AddNewOrderScreen(Screen):
