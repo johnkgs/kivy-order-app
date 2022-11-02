@@ -1,4 +1,5 @@
 from datetime import date
+from typing import List, Union
 
 from kivymd.app import MDApp
 from kivymd.uix.button import MDRaisedButton
@@ -8,6 +9,7 @@ from kivymd.uix.textfield import MDTextField
 from kivymd.uix.toolbar import MDTopAppBar
 
 from order_app.web.services.order_service import OrderService
+from order_app.web.services.types.order import CreateOrderResponse
 
 
 class AddNewOrderScreen(Screen):
@@ -49,8 +51,8 @@ class AddNewOrderScreen(Screen):
     def navigation_back(self, *args):
         self.manager.current = "orders"
 
-    def show_snackbar(self, message: str):
-        self.snackbar = Snackbar(text=message)
+    def show_snackbar(self, message: str, bg_color="#b23a3a"):
+        self.snackbar = Snackbar(text=message, bg_color=bg_color)
         self.snackbar.open()
 
     def on_submit(
@@ -89,8 +91,10 @@ class AddNewOrderScreen(Screen):
             [(key, self.format_payload(field)) for key, field in data.items()]
         )
 
-        response = OrderService.create_order(payload)
-        self.show_snackbar(response.get("message"))
+        self.ids.spinner.active = True
+        self.ids.add.disabled = True
+
+        OrderService.create_order(payload, self.on_success, self.on_error)
 
     def format_payload(self, text_field: MDTextField):
         if text_field.hint_text == "Data":
@@ -98,3 +102,30 @@ class AddNewOrderScreen(Screen):
             data.reverse()
             return str("-".join(data))
         return text_field.text
+
+    def on_success(self, response: CreateOrderResponse):
+        self.show_snackbar(response.get("message"), "#108348")
+        self.ids.spinner.active = False
+        self.reset_fields()
+        self.navigation_back()
+        self.ids.add.disabled = False
+
+    def on_error(self, response: CreateOrderResponse):
+        self.show_snackbar(response.get("message"))
+        self.ids.spinner.active = False
+        self.ids.add.disabled = False
+
+    def reset_fields(self):
+        form_fields: List[
+            Union[MDRaisedButton, MDTextField]
+        ] = self.ids.form.children
+
+        text_fields = list(
+            filter(
+                lambda x: not isinstance(x, MDRaisedButton),
+                form_fields,
+            )
+        )
+
+        for text_field in text_fields:
+            text_field.text = ""

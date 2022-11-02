@@ -55,3 +55,36 @@ class FormatGetOrdersResponse:
             on_success(response)
 
         return success
+
+
+class FormatCreateOrderResponse:
+    def on_success(
+        on_success: Callable[[CreateOrderResponse], None]
+    ) -> CreateOrderResponse:
+        def success(request: UrlRequest, response_body: Order):
+            response: CreateOrderResponse = {
+                "status_code": request.resp_status,
+                "message": "Pedido adicionado com sucesso!",
+                "success": True,
+                "data": response_body,
+            }
+
+            on_success(response)
+
+        return success
+
+    def on_error(
+        on_error: Callable[[CreateOrderResponse], None]
+    ) -> CreateOrderResponse:
+        def error(request: UrlRequest, response_body: OrderResponseError):
+            first_error, *rest = response_body.get("detail")
+            response: CreateOrderResponse = {
+                "status_code": request.resp_status,
+                "message": first_error.get("msg"),
+                "success": True,
+                "data": response_body,
+            }
+
+            on_error(response)
+
+        return error

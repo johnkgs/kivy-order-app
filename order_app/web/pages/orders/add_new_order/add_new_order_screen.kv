@@ -3,11 +3,6 @@
 #:set sidebar_width 80
 <AddNewOrderScreen>
     name: "add_new_order"
-    MDSpinner:
-        id: spinner
-        size_hint: None, None
-        size: 46, 46
-        pos_hint: {"center_x": .5, "center_y": .5}
     MDBoxLayout:
         orientation: "vertical"
         padding: 16
@@ -16,6 +11,11 @@
         pos_hint: {"top": (root.height - header_height) / root.height, "right": 1 }
         width: root.width - sidebar_width
         height: root.height - header_height
+        MDSpinner:
+            id: spinner
+            size_hint: None, None
+            size: 46, 46
+            pos_hint: {"center_x": .5, "center_y": .5}
         ScrollView:
             MDGridLayout:
                 id: form
@@ -59,6 +59,8 @@
                     id: add
                     text: "Adicionar"
                     width: 240
+                    elevation: 0
+                    shadow_softness: 100
                     pos_hint: {"right": 1 }
                     on_press: root.on_submit(*args)
 
