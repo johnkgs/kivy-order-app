@@ -7,6 +7,8 @@ from kivymd.uix.snackbar import Snackbar
 from kivymd.uix.textfield import MDTextField
 from kivymd.uix.toolbar import MDTopAppBar
 
+from order_app.web.services.order_service import OrderService
+
 
 class AddNewOrderScreen(Screen):
     def __init__(self, **kwargs):
@@ -47,8 +49,8 @@ class AddNewOrderScreen(Screen):
     def navigation_back(self, *args):
         self.manager.current = "orders"
 
-    def show_snackbar(self, error: str):
-        self.snackbar = Snackbar(text=error)
+    def show_snackbar(self, message: str):
+        self.snackbar = Snackbar(text=message)
         self.snackbar.open()
 
     def on_submit(
@@ -83,4 +85,16 @@ class AddNewOrderScreen(Screen):
             self.show_snackbar(message)
             return
 
-        payload = dict([(key, field.text) for key, field in data.items()])
+        payload = dict(
+            [(key, self.format_payload(field)) for key, field in data.items()]
+        )
+
+        response = OrderService.create_order(payload)
+        self.show_snackbar(response.get("message"))
+
+    def format_payload(self, text_field: MDTextField):
+        if text_field.hint_text == "Data":
+            data = text_field.text.split("/")
+            data.reverse()
+            return str("-".join(data))
+        return text_field.text
