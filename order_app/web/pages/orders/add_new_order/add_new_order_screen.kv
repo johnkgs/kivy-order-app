@@ -29,24 +29,30 @@
                     width: 300
                     required: True
                     helper_text: "Campo obrigatório"
+                    helper_text_mode: "on_error"
                 MDTextField:
                     id: amount
                     hint_text: "Valor"
+                    input_filter: "float"
                     width: 300
                     required: True
                     helper_text: "Campo obrigatório"
+                    helper_text_mode: "on_error"
                 MDTextField:
                     id: quantity
                     hint_text: "Quantidade"
+                    input_filter: "int"
                     width: 300
                     required: True
                     helper_text: "Campo obrigatório"
+                    helper_text_mode: "on_error"
                 MDTextField:
                     id: date
                     hint_text: "Data"
                     width: 300
                     required: True
                     helper_text: "Entre com uma data no formato valido: dd/mm/yyyy"
+                    helper_text_mode: "on_error"
                     validator: "date"
                     date_format: "dd/mm/yyyy"
                 MDRaisedButton:

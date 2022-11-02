@@ -1,21 +1,18 @@
 from datetime import date
+from typing import List, Union
 
 from kivymd.app import MDApp
 from kivymd.uix.button import MDRaisedButton
 from kivymd.uix.screen import Screen
+from kivymd.uix.snackbar import Snackbar
 from kivymd.uix.textfield import MDTextField
 from kivymd.uix.toolbar import MDTopAppBar
+from kivymd.uix.gridlayout import MDGridLayout
 
 
 class AddNewOrderScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
-    def on_enter(self, *args):
-        today = date.today().strftime("%d/%m/%Y")
-
-        date_field: MDTextField = self.ids.date
-        date_field.set_text(self, today)
 
     def on_pre_enter(self, *args):
         self.ids.spinner.active = False
@@ -24,6 +21,11 @@ class AddNewOrderScreen(Screen):
         self.toolbar: MDTopAppBar = header.ids.toolbar
 
         self.change_header()
+
+        today = date.today().strftime("%d/%m/%Y")
+
+        date_field: MDTextField = self.ids.date
+        date_field.set_text(self, today)
 
     def change_header(self):
         self.toolbar.title = "Adicionar novo pedido"
@@ -47,6 +49,10 @@ class AddNewOrderScreen(Screen):
     def navigation_back(self, *args):
         self.manager.current = "orders"
 
+    def show_snackbar(self, error: str):
+        self.snackbar = Snackbar(text=error)
+        self.snackbar.open()
+
     def on_submit(
         self,
         instance: MDRaisedButton,
@@ -64,5 +70,19 @@ class AddNewOrderScreen(Screen):
         }
 
         has_error = True in [field.error for field in data.values()]
+
+        if has_error:
+            errors = list(data.values())
+            field_errors = list(filter(lambda x: x.error == True, errors))
+            message = ""
+            if len(field_errors) > 1:
+                fields = list(map(lambda x: x.hint_text, field_errors))
+                field_texts = ", ".join(fields)
+                message = f"Erro nos campos: {field_texts}"
+            if len(field_errors) == 1:
+                field_error, *rest = field_errors
+                message = f"Erro no campo: {field_error.hint_text}"
+            self.show_snackbar(message)
+            return
 
         payload = dict([(key, field.text) for key, field in data.items()])
