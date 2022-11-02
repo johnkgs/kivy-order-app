@@ -6,6 +6,7 @@ authors = ["JohnKGS <johnkelvinsouza@hotmail.com>"]
 readme = "README.md"
 
 [tool.poetry.scripts]
+start_api = "order_app.api.main:start"
 start_web = "order_app.web.main:start"
 
 [tool.poetry.dependencies]
