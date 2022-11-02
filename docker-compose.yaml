@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+    activemq:
+        image: webcenter/activemq:5.14.3
+        container_name: activemq
+        volumes:
+            - "./activemq/conf/activemq.xml:/conf/activemq.xml"
+        ports:
+            - "61613:61613"
+            - "8161:8161"
+        environment:
+            ACTIVEMQ_ADMIN_LOGIN: ${ACTIVEMQ_ADMIN_LOGIN}
+            ACTIVEMQ_ADMIN_PASSWORD: ${ACTIVEMQ_ADMIN_PASSWORD}
+            ACTIVEMQ_USER_LOGIN: ${ACTIVEMQ_USER_LOGIN}
+            ACTIVEMQ_USER_PASSWORD: ${ACTIVEMQ_USER_PASSWORD}

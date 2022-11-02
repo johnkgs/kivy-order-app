@@ -8,6 +8,7 @@ readme = "README.md"
 [tool.poetry.scripts]
 start_api = "order_app.api.main:start"
 start_web = "order_app.web.main:start"
+start_queue = "order_app.queue.main:start"
 
 [tool.poetry.dependencies]
 python = "^3.9"

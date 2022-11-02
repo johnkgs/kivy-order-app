@@ -1,4 +1,7 @@
 __pycache__
 .pytest_cache
-.venv
 dist
+
+# Enviroments
+.venv
+.env
