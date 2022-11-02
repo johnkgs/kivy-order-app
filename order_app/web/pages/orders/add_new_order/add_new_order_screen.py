@@ -1,4 +1,5 @@
 from datetime import date
+import json
 from typing import List, Union
 
 from kivymd.app import MDApp
@@ -7,9 +8,7 @@ from kivymd.uix.screen import Screen
 from kivymd.uix.snackbar import Snackbar
 from kivymd.uix.textfield import MDTextField
 from kivymd.uix.toolbar import MDTopAppBar
-
-from order_app.web.services.order_service import OrderService
-from order_app.web.services.types.order import CreateOrderResponse
+from order_app.queue.queues.order_queue import OrderQueue
 
 
 class AddNewOrderScreen(Screen):
@@ -94,7 +93,8 @@ class AddNewOrderScreen(Screen):
         self.ids.spinner.active = True
         self.ids.add.disabled = True
 
-        OrderService.create_order(payload, self.on_success, self.on_error)
+        OrderQueue.send_order(json.dumps(payload))
+        self.on_success("Pedido enviado com sucesso!")
 
     def format_payload(self, text_field: MDTextField):
         if text_field.hint_text == "Data":
@@ -103,16 +103,11 @@ class AddNewOrderScreen(Screen):
             return str("-".join(data))
         return text_field.text
 
-    def on_success(self, response: CreateOrderResponse):
-        self.show_snackbar(response.get("message"), "#108348")
+    def on_success(self, message: str):
+        self.show_snackbar(message, "#108348")
         self.ids.spinner.active = False
         self.reset_fields()
         self.navigation_back()
-        self.ids.add.disabled = False
-
-    def on_error(self, response: CreateOrderResponse):
-        self.show_snackbar(response.get("message"))
-        self.ids.spinner.active = False
         self.ids.add.disabled = False
 
     def reset_fields(self):
