@@ -1,0 +1,58 @@
+#:kivy 2.1.0
+#:set header_height 64
+#:set sidebar_width 80
+<AddNewOrderScreen>
+    name: "add_new_order"
+    MDSpinner:
+        id: spinner
+        size_hint: None, None
+        size: 46, 46
+        pos_hint: {"center_x": .5, "center_y": .5}
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: 16
+        spacing: 8
+        size_hint: None, None
+        pos_hint: {"top": (root.height - header_height) / root.height, "right": 1 }
+        width: root.width - sidebar_width
+        height: root.height - header_height
+        ScrollView:
+            MDGridLayout:
+                id: form
+                cols: 1
+                padding: 16, 0
+                spacing: 24
+                adaptive_height: True
+                MDTextField:
+                    id: product
+                    hint_text: "Produto"
+                    width: 300
+                    required: True
+                    helper_text: "Campo obrigatório"
+                MDTextField:
+                    id: amount
+                    hint_text: "Valor"
+                    width: 300
+                    required: True
+                    helper_text: "Campo obrigatório"
+                MDTextField:
+                    id: quantity
+                    hint_text: "Quantidade"
+                    width: 300
+                    required: True
+                    helper_text: "Campo obrigatório"
+                MDTextField:
+                    id: date
+                    hint_text: "Data"
+                    width: 300
+                    required: True
+                    helper_text: "Entre com uma data no formato valido: dd/mm/yyyy"
+                    validator: "date"
+                    date_format: "dd/mm/yyyy"
+                MDRaisedButton:
+                    id: add
+                    text: "Adicionar"
+                    width: 240
+                    pos_hint: {"right": 1 }
+                    on_press: root.on_submit(*args)
+

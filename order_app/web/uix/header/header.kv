@@ -5,7 +5,8 @@
         id: toolbar
         title: "Pedidos"
     MDNavigationRail:
-        id: "sidebar"
+        id: sidebar
+        on_item_release: app.switch_screen(*args)
         MDNavigationRailItem:
             text: "Pedidos"
             icon: "cart-outline"

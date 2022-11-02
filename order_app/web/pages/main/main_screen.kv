@@ -1,9 +1,13 @@
 #:kivy 2.1.0
 
 #:include ./order_app/web/uix/header/header.kv
+#:include ./order_app/web/pages/orders/orders_screen.kv
+#:include ./order_app/web/pages/orders/add_new_order/add_new_order_screen.kv
 
 MDScreen:
     Header:
         id: header
     ScreenManager:
         id: screen_manager
+        OrdersScreen:
+        AddNewOrderScreen:

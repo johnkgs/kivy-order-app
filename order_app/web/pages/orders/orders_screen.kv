@@ -1,0 +1,37 @@
+#:kivy 2.1.0
+#:set header_height 64
+#:set sidebar_width 80
+<OrdersScreen>
+    name: "orders"
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: 16
+        spacing: 8
+        size_hint: None, None
+        pos_hint: {"top": (root.height - header_height) / root.height, "right": 1 }
+        width: root.width - sidebar_width
+        height: root.height - header_height
+        MDBoxLayout:
+            adaptive_height: True
+            spacing: 16
+            MDTextField:
+                id: search_field
+                hint_text: "Filtrar pedidos"
+                icon_left: "magnify"
+                on_text: root.set_orders_list(self.text, True)
+                pos_hint: {"center_y": 0.3}
+                width: 300
+            MDRectangleFlatIconButton:
+                id: add_new_order
+                text: "Adicionar novo pedido"
+                icon: "cart-plus"
+                line_color: 0, 0, 0, 0
+                width: 240
+                md_bg_color: app.theme_cls.primary_color
+                text_color: '#ffffff'
+                icon_color: '#ffffff'
+                opposite_colors: True
+                on_press: root.on_press_add_new_order(*args)
+        RecycleView:
+            id: recycle_view
+            key_size: "height"
