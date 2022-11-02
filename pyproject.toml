@@ -15,6 +15,8 @@ Kivy = {extras = ["base"], version = "^2.1.0"}
 kivymd = "^1.1.1"
 fastapi = "^0.85.2"
 uvicorn = "^0.19.0"
+SQLAlchemy = "^1.4.42"
+pydantic = "^1.10.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
