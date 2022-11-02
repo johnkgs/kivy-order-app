@@ -12,6 +12,8 @@ start_web = "order_app.web.main:start"
 python = "^3.9"
 Kivy = {extras = ["base"], version = "^2.1.0"}
 kivymd = "^1.1.1"
+fastapi = "^0.85.2"
+uvicorn = "^0.19.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
