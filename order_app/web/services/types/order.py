@@ -2,7 +2,7 @@ from datetime import date
 from typing import TypedDict, Literal, Tuple, List, Union
 
 
-class OrderPayload:
+class OrderPayload(TypedDict):
     product: str
     amount: float
     quantity: int
@@ -30,3 +30,10 @@ class CreateOrderResponse(TypedDict):
     message: str
     success: bool
     data: Union[Order, OrderResponseError]
+
+
+class GetOrdersResponse(TypedDict):
+    status_code: int
+    message: str
+    success: bool
+    data: Union[List[Order], OrderResponseError]

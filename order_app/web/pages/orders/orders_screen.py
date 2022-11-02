@@ -7,6 +7,8 @@ from kivymd.uix.label import MDLabel
 from kivymd.uix.screen import Screen
 
 from order_app.web.utils.decorators.debounce import debounce
+from order_app.web.services.order_service import OrderService
+from order_app.web.services.types.order import Order
 
 column_header = [
     ["Produto", dp(128)],
@@ -15,12 +17,34 @@ column_header = [
     ["Data", dp(64)],
 ]
 
-row_data = [["Iphone X", "1000", "3", "20/10/2021"]]
-
 
 class OrdersScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.row_data = []
+        self.data_table = None
+
+    def on_pre_enter(self, *args):
+        response = OrderService.get_orders()
+        if response.get("success"):
+            data: List[Order] = response.get("data")
+            self.row_data = list(map(self.format_data, data))
+
+            if self.data_table is not None:
+                self.data_table.row_data = self.row_data
+
+    def format_data(self, item: Order):
+        return [
+            str(item.get("product")),
+            str(item.get("amount")),
+            str(item.get("quantity")),
+            str(self.format_date(item.get("date"))),
+        ]
+
+    def format_date(self, date: str):
+        data = date.split("-")
+        data.reverse()
+        return "/".join(data)
 
     def filter(
         self,
@@ -38,10 +62,10 @@ class OrdersScreen(Screen):
     def set_orders_list(self, text="", search=False):
         if search:
             if len(text) > 0:
-                self.data_table.row_data = self.filter(text, row_data)
+                self.data_table.row_data = self.filter(text, self.row_data)
                 return
 
-            self.data_table.row_data = row_data
+            self.data_table.row_data = self.row_data
 
     def add_processes_data_table_widget(
         self,
@@ -51,7 +75,7 @@ class OrdersScreen(Screen):
             use_pagination=True,
             pagination_menu_pos="auto",
             column_data=column_header,
-            row_data=row_data,
+            row_data=self.row_data,
         )
 
         pagination_label: MDLabel = self.data_table.pagination.children[-1]
