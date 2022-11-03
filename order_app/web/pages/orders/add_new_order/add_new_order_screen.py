@@ -93,6 +93,9 @@ class AddNewOrderScreen(Screen):
         self.ids.spinner.active = True
         self.ids.add.disabled = True
 
+        if isinstance(self.snackbar, Snackbar):
+            self.get_root_window().remove_widget(self.snackbar)
+
         OrderQueue.send_order(json.dumps(payload))
         self.on_success("Pedido enviado com sucesso!")
 
