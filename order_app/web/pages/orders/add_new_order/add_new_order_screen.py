@@ -93,7 +93,7 @@ class AddNewOrderScreen(Screen):
         self.ids.spinner.active = True
         self.ids.add.disabled = True
 
-        if isinstance(self.snackbar, Snackbar):
+        if hasattr(self, "snackbar"):
             self.get_root_window().remove_widget(self.snackbar)
 
         OrderQueue.send_order(json.dumps(payload))
