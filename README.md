@@ -24,3 +24,9 @@ Executar formatador de código:
 ```bash
 poetry run black order_app/
 ```
+
+Executar ordenação de importações:
+
+```bash
+poetry run isort order_app/
+```
