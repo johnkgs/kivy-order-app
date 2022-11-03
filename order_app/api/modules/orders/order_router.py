@@ -4,12 +4,11 @@ from typing import List
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
-from order_app.api.utils.tags import RouterTags
 from order_app.api.config.database import Database
+from order_app.api.utils.tags import RouterTags
 
-from .order_schemas import OrderSchema, OrderPayload
 from .order_repository import OrderRepository
-
+from .order_schemas import OrderPayload, OrderSchema
 
 router = APIRouter()
 

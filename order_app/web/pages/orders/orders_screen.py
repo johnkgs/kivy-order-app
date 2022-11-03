@@ -6,9 +6,9 @@ from kivymd.uix.datatables import MDDataTable
 from kivymd.uix.label import MDLabel
 from kivymd.uix.screen import Screen
 
-from order_app.web.utils.decorators.debounce import debounce
 from order_app.web.services.order_service import OrderService
-from order_app.web.services.types.order import Order, GetOrdersResponse
+from order_app.web.services.types.order import GetOrdersResponse, Order
+from order_app.web.utils.decorators.debounce import debounce
 
 column_header = [
     ["Produto", dp(128)],

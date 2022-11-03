@@ -1,5 +1,5 @@
-from stomp import Connection
 from pydantic import BaseSettings, Field
+from stomp import Connection
 
 
 def get_connection():

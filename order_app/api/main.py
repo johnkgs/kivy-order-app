@@ -4,7 +4,6 @@ from fastapi import FastAPI
 from .config.database import engine
 from .modules.orders import order_entity, order_router
 
-
 order_entity.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()

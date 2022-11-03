@@ -1,5 +1,6 @@
 from datetime import date
-from typing import Callable, TypedDict, Literal, Tuple, List, Union
+from typing import Callable, List, Literal, Tuple, TypedDict, Union
+
 from kivy.network.urlrequest import UrlRequest
 
 

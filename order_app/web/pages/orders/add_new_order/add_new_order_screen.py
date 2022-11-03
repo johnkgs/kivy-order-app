@@ -1,5 +1,5 @@
-from datetime import date
 import json
+from datetime import date
 from typing import List, Union
 
 from kivymd.app import MDApp
@@ -8,6 +8,7 @@ from kivymd.uix.screen import Screen
 from kivymd.uix.snackbar import Snackbar
 from kivymd.uix.textfield import MDTextField
 from kivymd.uix.toolbar import MDTopAppBar
+
 from order_app.queue.queues.order_queue import OrderQueue
 
 
