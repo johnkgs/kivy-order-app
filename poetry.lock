@@ -160,6 +160,20 @@ optional = false
 python-versions = ">=3.5"
 
 [[package]]
+name = "isort"
+version = "5.10.1"
+description = "A Python utility / library to sort Python imports."
+category = "dev"
+optional = false
+python-versions = ">=3.6.1,<4.0"
+
+[package.extras]
+pipfile_deprecated_finder = ["pipreqs", "requirementslib"]
+requirements_deprecated_finder = ["pipreqs", "pip-api"]
+colors = ["colorama (>=0.4.3,<0.5.0)"]
+plugins = ["setuptools"]
+
+[[package]]
 name = "kivy"
 version = "2.1.0"
 description = "A software library for rapid development of hardware-accelerated multitouch applications."
@@ -560,7 +574,7 @@ docs = ["sphinx-rtd-theme (>=0.5)", "Sphinx (>=3.4)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "d603f46889775882c12bcf1a0f63680952aa1a08e18ea45df2925311f16c29bc"
+content-hash = "e77bd4802b67e7291e612458612eea69146baa51cc9b87b5dab2bf7bc1e1fdd7"
 
 [metadata.files]
 anyio = []
@@ -580,6 +594,7 @@ fastapi = []
 greenlet = []
 h11 = []
 idna = []
+isort = []
 kivy = [
     {file = "Kivy-2.1.0-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:5936bec77659b7774100094462ee124684235572ddc5177e47f99ec9a9ecba84"},
     {file = "Kivy-2.1.0-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:222c1cae30a5f85b1ccf6bdab391a2a255a2acb3b891ce04037156109c7856f2"},
