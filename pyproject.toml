@@ -9,6 +9,7 @@ readme = "README.md"
 start_api = "order_app.api.main:start"
 start_web = "order_app.web.main:start"
 start_queue = "order_app.queue.main:start"
+start = "scripts.main:start"
 
 [tool.poetry.dependencies]
 python = "^3.9"
