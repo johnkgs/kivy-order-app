@@ -5,7 +5,27 @@
 -   [Poetry](https://python-poetry.org/) >= 1.1.12
 -   [Python](https://www.python.org/) >= 3.9
 
+<br />
+
+## Poetry via PIP
+
+Instalação
+
+```bash
+pip install poetry
+```
+
+Verificar a versão do poetry
+
+```bash
+poetry --version
+```
+
+<br />
+
 ## Como executar o projeto
+
+Renomear o arquivo [`.env.example`](./.env.example) para `.env`:
 
 Instalar dependências:
 
